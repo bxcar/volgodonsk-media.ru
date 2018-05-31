@@ -23,6 +23,7 @@
       add_theme_support( 'automatic-feed-links' );
       register_nav_menus( array(
       'main-menu' => __( 'Main Menu', 'bootstrapwp' ),
+      'main-additional' => __( 'Additional-main', 'bootstrapwp' ),
       ) );
       add_theme_support( 'post-formats', array( 'aside', 'image', 'gallery', 'link', 'quote', 'status', 'video', 'audio', 'chat' ) );
     }
