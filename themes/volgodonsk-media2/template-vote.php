@@ -7,6 +7,7 @@
 <?php while (have_posts()) :
 the_post(); ?>
 <link rel="stylesheet" href="<?= get_template_directory_uri(); ?>/css/vote.css">
+<link rel="stylesheet" href="<?= get_template_directory_uri(); ?>/css/magnific-popup.css">
 <div class="row">
     <div class="container">
         <?php if (function_exists('bootstrapwp_breadcrumbs')) bootstrapwp_breadcrumbs(); ?>
@@ -108,6 +109,11 @@ the_post(); ?>
                 <div class="clear"></div>
 
             </div>
+        </div>
+        <div class="mgnfc-popup-parent-container" style="">
+            <a href="<?= $item['gallery'][0]['url']; ?>">Open popup 1</a>
+            <a href="<?= $item['gallery'][1]['url']; ?>">Open popup 2</a>
+            <a href="<?= $item['gallery'][2]['url']; ?>">Open popup 3</a>
         </div>
 
         <?php endwhile; ?>
