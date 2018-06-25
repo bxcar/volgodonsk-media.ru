@@ -103,7 +103,7 @@ the_post(); ?>
                     }
 
                     .gallery-right-sidebar {
-                        color: red;
+                        color: #000;
                         line-height: 1.2em;
                         margin: 40px 0 40px;
                         width: 300px;
@@ -111,12 +111,38 @@ the_post(); ?>
                         background: #fff;
                     }
 
+                    .member-name {
+                        color: #2a5885;
+                        text-decoration: none;
+                        font-weight: 500;
+                        padding: 13px 20px 10px 15px;
+                        background-color: #fafbfc;
+                        white-space: nowrap;
+                        border-bottom: 1px solid #e7e8ec;
+                    }
+
+                    .member-votes {
+                        color: #000;
+                        text-decoration: none;
+                        font-weight: 500;
+                        padding: 13px 20px 10px 15px;
+                        white-space: nowrap;
+                        border-bottom: 1px solid #e7e8ec;
+                    }
+
+                    .member-desc {
+                        color: #000;
+                        text-decoration: none;
+                        font-weight: 500;
+                        padding: 13px 20px 10px 15px;
+                    }
+
                     .mfp-img {
                         max-width: 600px !important;
                         object-fit: cover;
                     }
 
-                    .mfp-close  {
+                    .mfp-close {
                         position: relative;
                     }
 
@@ -138,15 +164,16 @@ the_post(); ?>
                                     <li class="vote-answer-item ">
                                         <a class="vhead"><?= $item['name']; ?></a>
                                         <div class="vote-answer-item__image-block"
-                                           href="#">
+                                             href="#">
                                             <img style="width: 188px; height: 140px;"
                                                  src="<?= $item['mini_img']; ?>">
-                                            <div class="mgnfc-popup-parent-container mgnfc-popup-parent-container-<?= $i ?>" style="">
-                                                <?php if($item['gallery']) {
+                                            <div class="mgnfc-popup-parent-container mgnfc-popup-parent-container-<?= $i ?>"
+                                                 style="">
+                                                <?php if ($item['gallery']) {
                                                     foreach ($item['gallery'] as $gallery_item) { ?>
                                                         <a href="<?= $gallery_item['url']; ?>"></a>
                                                     <?php }
-                                                }?>
+                                                } ?>
                                             </div>
                                             <script>
                                                 $('.mgnfc-popup-parent-container-<?= $i ?>').magnificPopup({
@@ -157,14 +184,18 @@ the_post(); ?>
                                                         markup: '<div class="mfp-figure">' +
 
                                                         '<div class="mfp-img"></div>' +
-                                                        '<figure>'+'<figcaption>'+
+                                                        '<figure>' + '<figcaption>' +
                                                         '<div class="mfp-bottom-bar">' +
                                                         '<div style="background: #fff; text-align: center"  class="mfp-title "></div>' +
 
-                                                        '</div>'+
-                                                        '</figcaption>'+
+                                                        '</div>' +
+                                                        '</figcaption>' +
                                                         '</figure>' +
-                                                        '<div class="gallery-right-sidebar">right sidebar</div>' +
+                                                        '<div class="gallery-right-sidebar">' +
+                                                        '<div class="member-name"><?= $item["name"]; ?></div>' +
+                                                        '<div class="member-votes">Голосов: 857</div>' +
+                                                        '<div class="member-desc"><?= $item["desc"]; ?></div>' +
+                                                        '</div>' +
                                                         '<div class="mfp-close"></div>' +
                                                         '</div>'
                                                     }
