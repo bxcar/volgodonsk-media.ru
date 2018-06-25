@@ -317,22 +317,24 @@ function update_vote() {
     $ip = $_SERVER['REMOTE_ADDR'];
     $member = (int)strip_tags(trim($_POST['member']));
     $post_id = strip_tags(trim($_POST['post_id']));
-    $vote_amount = (int)get_field('members', $post_id )[$member]['vote'] + 1;
+    $vote_amount = (int)get_field('members', $post_id )[$member]['vote'];
 
-    /*if(get_field('konkurs_ip', $post_id)) {
+    if(get_field('konkurs_ip', $post_id)) {
         foreach (get_field('konkurs_ip', $post_id) as $item) {
             if($item['ip'] == $ip) {
-                $result = 12;
-                echo json_encode($result);
+                $arr = array('vote' => $vote_amount, 'ip_disable' => true);
+                echo json_encode($arr);
                 return;
             }
         }
-    }*/
+    }
 
-   /* $row = array(
+    $vote_amount = $vote_amount + 1;
+
+    $row = array(
         'ip'	=> $ip,
     );
-    add_row('konkurs_ip', $row, $post_id);*/
+    add_row('konkurs_ip', $row, $post_id);
 
     $member++;
 

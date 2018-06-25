@@ -685,14 +685,14 @@
     top: 24px;
     display: block;
 }
-@media screen and (max-width: 1280px) {
+/*@media screen and (max-width: 1280px) {
     .vote-content-fx .bloknot_table .forum-user-name {
         font: normal 14px/14px Arial;
     }
     .vote-content-fx .news-section-header h1 span.alternate {
         font-size: 14px;
     }
-}
+}*/
 .vote-content-fx .forum-user-avatar .avatar {
     border-radius: 3px;
     display: block;
@@ -1025,7 +1025,7 @@
         display: inline-block;
     }
 }
-@media screen and (max-width: 1280px) {
+/*@media screen and (max-width: 1280px) {
     .vote-content-fx .wrapper {
         width: 980px;
         margin: 0 auto;
@@ -1232,7 +1232,7 @@
     .vote-content-fx .middle .topslider div.minfo i {
         display: inline-block;
     }
-}
+}*/
 .vote-content-fx .mblock {
     padding-top: 20px;
     clear: both;
@@ -1675,7 +1675,7 @@
     color: #5C5C5C;
     padding: 3px 5px 25px;
 }
-@media screen and (max-width: 1280px) {
+/*@media screen and (max-width: 1280px) {
     .vote-content-fx div.tripleline .catitem .thumbimage {
         width: 218px;
         height: 158px;
@@ -1694,7 +1694,7 @@
     .vote-content-fx div.tripleline .catitem .thumbimage .previewtext {
         width: 198px;
     }
-}
+}*/
 .vote-content-fx .popholder li ul {
     position: relative;
     display: none;
@@ -4744,7 +4744,7 @@
         min-width: 1160px;
     }
 }
-@media screen and (max-width: 1280px) {
+/*@media screen and (max-width: 1280px) {
     .vote-content-fx .active_contest,
     .vote-content-fx .contestsworks {
         display: block;
@@ -5076,7 +5076,7 @@
     .vote-content-fx .main_content {
         min-width: 1000px;
     }
-}
+}*/
 @media all and (max-width: 1000px) {
     .vote-content-fx .upperbanner img {
         width: 100% !important;
@@ -5633,13 +5633,13 @@
 .vote-content-fx .contest-box-buttons table.contest-captcha-box td.vc-last {
     padding-right: 20px;
 }
-@media screen and (max-width: 1280px) {
-    .vote-content-fx ol.contest-voting-answers .vote-answer-item {
-        width: 163px;
-        height: 185px;
-        margin-right: 7px;
-    }
-}
+/*@media screen and (max-width: 1280px) {*/
+    /*.vote-content-fx ol.contest-voting-answers .vote-answer-item {*/
+        /*width: 163px;*/
+        /*height: 185px;*/
+        /*margin-right: 7px;*/
+    /*}*/
+/*}*/
 @media screen and (max-width: 1px) and (orientation: portrait) {
     .vote-content-fx ol.contest-voting-answers .vote-answer-item {
         width: 191px;
@@ -5791,11 +5791,11 @@
     background-color: #feaf1d;
     color: #000;
 }
-@media screen and (max-width: 1280px) {
+/*@media screen and (max-width: 1280px) {
     .vote-content-fx .news-section {
         width: 690px;
     }
-}
+}*/
 .vote-content-fx .contestsworks .citem .thumb .icount {
     display: block;
     padding: 10px;
@@ -5823,7 +5823,7 @@
 .vote-content-fx .login-form .fields .field-title {
     font: bold 14px/18px Arial, sans-serif;
 }
-@media screen and (max-device-width: 1280px) {
+/*@media screen and (max-device-width: 1280px) {
     .vote-content-fx .html_banner div {
         transform-origin: 0 0;
     }
@@ -5833,7 +5833,7 @@
     .vote-content-fx [id^="adfoxHtml5_pseudoPlaceholder_"] {
         transform: none !important;
     }
-}
+}*/
 .vote-content-fx .narod-header {
     box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
     background-color: white;
@@ -6098,7 +6098,7 @@
     font-weight: bolder;
     padding: 15px;
 }
-@media screen and (max-width: 1280px) {
+/*@media screen and (max-width: 1280px) {
     .vote-content-fx .middle .topslider ul.nav li a:hover p,
     .vote-content-fx .middle .topslider ul.nav li.active a p {
         background-color: #FFF;
@@ -6141,7 +6141,7 @@
     .vote-content-fx .sidebar__metaline-content.fixed {
         width: 275px;
     }
-}
+}*/
 .vote-content-fx .lowflow-mini {
     bottom: 57px;
 }
@@ -6161,8 +6161,9 @@
     overflow: hidden;
     width: 325px;
 }
+/*
 @media screen and (max-width: 1280px) {
     .vote-content-fx .admitad_autobanner {
         width: 275px;
     }
-}
+}*/

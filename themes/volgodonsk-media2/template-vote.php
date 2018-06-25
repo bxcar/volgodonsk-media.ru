@@ -15,9 +15,9 @@ the_post(); ?>
         <?php if (function_exists('bootstrapwp_breadcrumbs')) bootstrapwp_breadcrumbs(); ?>
     </div>
 </div>
-<div class="container">
+<div class="container container--2">
     <h1><?php the_title(); ?></h1>
-    <div class="row content">
+    <div class="row content content--2">
 
         <div class="vote-content-fx">
             <div class="voting-form-box">
@@ -146,9 +146,83 @@ the_post(); ?>
                         position: relative;
                     }
 
+                    .mfp-figure {
+                        display: flex;
+                        justify-content: center;
+                    }
+
+
                     .mfp-figure:after {
                         background: transparent;
                         box-shadow: none;
+                    }
+
+                    .vote-answer-item__image-block img {
+                        width: 188px;
+                        height: 140px;
+                    }
+
+                    @media (max-width: 1200px) {
+                        body > .container--2 {
+                            display: flex;
+                            justify-content: center;
+                            flex-direction: column;
+                        }
+                        .span4 {
+                            display: none;
+                        }
+
+                        .content--2 {
+                            margin-left: 0;
+                        }
+                    }
+
+                    @media (max-width: 970px) {
+                        .mfp-figure {
+                            flex-direction: column;
+                        }
+
+                        .gallery-right-sidebar {
+                            width: 90%;
+                            max-width: 700px;
+                            margin-top: 0;
+                            margin-left: auto;
+                            margin-right: auto;
+                        }
+
+                        .mfp-img {
+                            padding-bottom: 0 !important;
+                            width: 90% !important;
+                            max-width: 700px !important;
+                        }
+
+                        .mfp-close {
+                            position: absolute;
+                            top: 0;
+                        }
+
+                        .vote-content-fx ol.contest-voting-answers .vote-answer-item {
+                            width: 100%;
+                            float: none;
+                            margin-right: 0;
+                            padding-right: 0;
+                            box-sizing: border-box;
+                            margin-bottom: 30px;
+                        }
+
+                        .contest-voting-answers__row {
+                            flex-wrap: wrap;
+                            align-items: center;
+                        }
+
+                        .vote-answer-item__image-block {
+                            align-items: center;
+                        }
+
+                        .vote-answer-item__image-block img {
+                            width: 100%;
+                            height: auto;
+                        }
                     }
                 </style>
                 <ol class="contest-voting">
@@ -165,7 +239,7 @@ the_post(); ?>
                                         <a class="vhead"><?= $item['name']; ?></a>
                                         <div class="vote-answer-item__image-block"
                                              href="#">
-                                            <img style="width: 188px; height: 140px;"
+                                            <img style=""
                                                  src="<?= $item['mini_img']; ?>">
                                             <div class="mgnfc-popup-parent-container mgnfc-popup-parent-container-<?= $i ?>"
                                                  style="">
@@ -234,6 +308,9 @@ the_post(); ?>
                                                         var response = JSON.parse(data);
                                                         $(".numvotes-<?= $i ?>").html("Голосов: " + response.vote);
                                                         $(".member-votes-<?= $i ?>").html("Голосов: " + response.vote);
+                                                        if(response.ip_disable) {
+                                                            alert('Вы уже проголосовали')
+                                                        }
                                                     },
 
                                                     error: function () {
