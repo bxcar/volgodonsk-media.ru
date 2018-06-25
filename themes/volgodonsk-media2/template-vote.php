@@ -193,7 +193,7 @@ the_post(); ?>
                                                         '</figure>' +
                                                         '<div class="gallery-right-sidebar">' +
                                                         '<div class="member-name"><?= $item["name"]; ?></div>' +
-                                                        '<div class="member-votes">Голосов: <?= $item["vote"]; ?></div>' +
+                                                        '<div class="member-votes member-votes-<?= $i ?>">Голосов: <?= $item["vote"]; ?></div>' +
                                                         '<div class="member-desc"><?= $item["desc"]; ?></div>' +
                                                         '</div>' +
                                                         '<div class="mfp-close"></div>' +
@@ -216,10 +216,12 @@ the_post(); ?>
                                         <script>
                                             $(".vote-button-<?= $i ?>").click(function (e) {
 
-                                                var url = "<?= get_template_directory_uri()?>/vote.php"; // the script where you handle the form input.
+                                                var url = "<?php echo admin_url("admin-ajax.php") ?>"; // the script where you handle the form input.
 
                                                 var form_data = {
-                                                    member : <?= $i; ?>
+                                                    action: 'update_vote',
+                                                    member : <?= $i; ?>,
+                                                    post_id : <?= get_the_ID(); ?>
                                                 };
 
                                                 $.ajax({
@@ -227,17 +229,14 @@ the_post(); ?>
                                                     url: url,
                                                     data: form_data, // serializes the form's elements.
                                                     success: function (data) {
-                                                        /*if (data == 1) {
-                                                            console.log('success');
-                                                        }
-
-                                                        else {
-                                                            console.log('error');
-                                                        }*/
-                                                        console.log(data);
+                                                        data = data.substring(0, data.length - 1);
+                                                        console.log(JSON.parse(data));
+                                                        var response = JSON.parse(data);
+                                                        $(".numvotes-<?= $i ?>").html("Голосов: " + response.vote);
+                                                        $(".member-votes-<?= $i ?>").html("Голосов: " + response.vote);
                                                     },
 
-                                                    error: function (data) {
+                                                    error: function () {
                                                         console.log('error');
                                                     }
                                                 });

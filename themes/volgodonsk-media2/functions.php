@@ -308,3 +308,36 @@
     echo '</ul>';
   }
 }
+
+
+add_action( 'wp_ajax_nopriv_update_vote',  'update_vote' );
+add_action( 'wp_ajax_update_vote','update_vote' );
+
+function update_vote() {
+    $ip = $_SERVER['REMOTE_ADDR'];
+    $member = (int)strip_tags(trim($_POST['member']));
+    $post_id = strip_tags(trim($_POST['post_id']));
+    $vote_amount = (int)get_field('members', $post_id )[$member]['vote'] + 1;
+
+    /*if(get_field('konkurs_ip', $post_id)) {
+        foreach (get_field('konkurs_ip', $post_id) as $item) {
+            if($item['ip'] == $ip) {
+                $result = 12;
+                echo json_encode($result);
+                return;
+            }
+        }
+    }*/
+
+   /* $row = array(
+        'ip'	=> $ip,
+    );
+    add_row('konkurs_ip', $row, $post_id);*/
+
+    $member++;
+
+    update_sub_field( array('members', $member, 'vote'), $vote_amount, $post_id );
+
+    $arr = array('vote' => $vote_amount);
+    echo json_encode($arr);
+}
