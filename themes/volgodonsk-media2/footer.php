@@ -109,8 +109,8 @@
 <script src="/wp-content/themes/volgodonsk-media2/js/jquery.jplayer.min.js" type="text/javascript"></script>
 <script src="/wp-content/themes/volgodonsk-media2/js/script.js?v=030" type="text/javascript"></script>
 
-<script src="<?= get_template_directory_uri(); ?>/js/jquery.magnific-popup.min.js"></script>
-<script>
+<!--<script src="--><?//= get_template_directory_uri(); ?><!--/js/jquery.magnific-popup.min.js"></script>-->
+<!--<script>
     $('.mgnfc-popup-parent-container').magnificPopup({
         delegate: 'a', // child items selector, by clicking on it popup will open
         type: 'image',
@@ -118,6 +118,6 @@
 //        midClick: true
         // other options
     });
-</script>
+</script>-->
 </body>
 </html>

@@ -8,6 +8,8 @@
 the_post(); ?>
 <link rel="stylesheet" href="<?= get_template_directory_uri(); ?>/css/vote.css">
 <link rel="stylesheet" href="<?= get_template_directory_uri(); ?>/css/magnific-popup.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" type="text/javascript"></script>
+<script src="<?= get_template_directory_uri(); ?>/js/jquery.magnific-popup.min.js"></script>
 <div class="row">
     <div class="container">
         <?php if (function_exists('bootstrapwp_breadcrumbs')) bootstrapwp_breadcrumbs(); ?>
@@ -68,6 +70,60 @@ the_post(); ?>
                         border-color: #ee5c4a;
                         outline: none;
                     }
+
+                    /*for gallery*/
+                    .vote-answer-item__image-block {
+                        position: relative;
+                    }
+
+                    .mgnfc-popup-parent-container {
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        top: 0;
+                        left: 0;
+                    }
+
+                    .mgnfc-popup-parent-container a {
+                        width: 100%;
+                        display: block;
+                        height: 100%;
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        opacity: 0;
+                    }
+
+                    .mgnfc-popup-parent-container a:first-child {
+                        z-index: 1;
+                    }
+
+                    .mfp-figure {
+                        display: flex;
+                    }
+
+                    .gallery-right-sidebar {
+                        color: red;
+                        line-height: 1.2em;
+                        margin: 40px 0 40px;
+                        width: 300px;
+                        min-width: 300px;
+                        background: #fff;
+                    }
+
+                    .mfp-img {
+                        max-width: 600px !important;
+                        object-fit: cover;
+                    }
+
+                    .mfp-close  {
+                        position: relative;
+                    }
+
+                    .mfp-figure:after {
+                        background: transparent;
+                        box-shadow: none;
+                    }
                 </style>
                 <ol class="contest-voting">
                     <li class="contest-voting-item contest-voting-first vote-item-vote-last ">
@@ -81,12 +137,43 @@ the_post(); ?>
                                     <?php } ?>
                                     <li class="vote-answer-item ">
                                         <a class="vhead"><?= $item['name']; ?></a>
-                                        <a class="vote-answer-item__image-block"
+                                        <div class="vote-answer-item__image-block"
                                            href="#">
                                             <img style="width: 188px; height: 140px;"
                                                  src="<?= $item['mini_img']; ?>">
+                                            <div class="mgnfc-popup-parent-container mgnfc-popup-parent-container-<?= $i ?>" style="">
+                                                <?php if($item['gallery']) {
+                                                    foreach ($item['gallery'] as $gallery_item) { ?>
+                                                        <a href="<?= $gallery_item['url']; ?>"></a>
+                                                    <?php }
+                                                }?>
+                                            </div>
+                                            <script>
+                                                $('.mgnfc-popup-parent-container-<?= $i ?>').magnificPopup({
+                                                    delegate: 'a', // child items selector, by clicking on it popup will open
+                                                    type: 'image',
+                                                    gallery: {enabled: true},
+                                                    image: {
+                                                        markup: '<div class="mfp-figure">' +
+
+                                                        '<div class="mfp-img"></div>' +
+                                                        '<figure>'+'<figcaption>'+
+                                                        '<div class="mfp-bottom-bar">' +
+                                                        '<div style="background: #fff; text-align: center"  class="mfp-title "></div>' +
+
+                                                        '</div>'+
+                                                        '</figcaption>'+
+                                                        '</figure>' +
+                                                        '<div class="gallery-right-sidebar">right sidebar</div>' +
+                                                        '<div class="mfp-close"></div>' +
+                                                        '</div>'
+                                                    }
+//        midClick: true
+                                                    // other options
+                                                });
+                                            </script>
                                             <!--                                        <p class="vote-answer-item__real-number">90</p>-->
-                                        </a>
+                                        </div>
                                         <div class="result">
                                             <!--                                        <span class="percent">10.00%</span>-->
                                             <span class="numvotes">Голосов: 857</span>
@@ -109,11 +196,6 @@ the_post(); ?>
                 <div class="clear"></div>
 
             </div>
-        </div>
-        <div class="mgnfc-popup-parent-container" style="">
-            <a href="<?= $item['gallery'][0]['url']; ?>">Open popup 1</a>
-            <a href="<?= $item['gallery'][1]['url']; ?>">Open popup 2</a>
-            <a href="<?= $item['gallery'][2]['url']; ?>">Open popup 3</a>
         </div>
 
         <?php endwhile; ?>
