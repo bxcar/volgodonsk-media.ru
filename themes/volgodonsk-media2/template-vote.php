@@ -16,7 +16,20 @@ the_post(); ?>
     </div>
 </div>
 <div class="container container--2">
-    <h1><?php the_title(); ?></h1>
+    <?php if (get_field('konkurs_close')) { ?>
+        <h1>Конкурс завершен</h1>
+        <style>
+            .vote-answer-item .bar {
+                display: none;
+            }
+
+            .vote-content-fx ol.contest-voting-answers .vote-answer-item {
+                height: 210px;
+            }
+        </style>
+    <?php } else { ?>
+        <h1><?php the_title(); ?></h1>
+    <?php } ?>
     <div class="row content content--2">
 
         <div class="vote-content-fx">
@@ -151,7 +164,6 @@ the_post(); ?>
                         justify-content: center;
                     }
 
-
                     .mfp-figure:after {
                         background: transparent;
                         box-shadow: none;
@@ -168,6 +180,7 @@ the_post(); ?>
                             justify-content: center;
                             flex-direction: column;
                         }
+
                         .span4 {
                             display: none;
                         }
@@ -229,103 +242,210 @@ the_post(); ?>
                     <li class="contest-voting-item contest-voting-first vote-item-vote-last ">
                         <div class="contest-voting-question">&nbsp;</div>
                         <ol class="contest-voting-answers">
-                            <?php if (get_field('members')) {
+                            <?php if (get_field('members') && get_field('konkurs_close')) {
                                 $i = 0;
                                 foreach (get_field('members') as $item) {
-                                    if ($i % 4 == 0) { ?>
-                                        <div class="contest-voting-answers__row">
-                                    <?php } ?>
-                                    <li class="vote-answer-item ">
-                                        <a class="vhead"><?= $item['name']; ?></a>
-                                        <div class="vote-answer-item__image-block"
-                                             href="#">
-                                            <img style=""
-                                                 src="<?= $item['mini_img']; ?>">
-                                            <div class="mgnfc-popup-parent-container mgnfc-popup-parent-container-<?= $i ?>"
-                                                 style="">
-                                                <?php if ($item['gallery']) {
-                                                    foreach ($item['gallery'] as $gallery_item) { ?>
-                                                        <a href="<?= $gallery_item['url']; ?>"></a>
-                                                    <?php }
-                                                } ?>
+                                    if ($item['winner']) {
+                                        if (($i % 4 == 0)) { ?>
+                                            <div class="contest-voting-answers__row">
+                                        <?php } ?>
+                                        <li class="vote-answer-item ">
+                                            <a class="vhead"><?= $item['name']; ?> - Победитель</a>
+                                            <div class="vote-answer-item__image-block"
+                                                 href="#">
+                                                <img style=""
+                                                     src="<?= $item['mini_img']; ?>">
+                                                <div class="mgnfc-popup-parent-container mgnfc-popup-parent-container-<?= $i ?>"
+                                                     style="">
+                                                    <?php if ($item['gallery']) {
+                                                        foreach ($item['gallery'] as $gallery_item) { ?>
+                                                            <a href="<?= $gallery_item['url']; ?>"></a>
+                                                        <?php }
+                                                    } ?>
+                                                </div>
+                                                <script>
+                                                    $('.mgnfc-popup-parent-container-<?= $i ?>').magnificPopup({
+                                                        delegate: 'a', // child items selector, by clicking on it popup will open
+                                                        type: 'image',
+                                                        gallery: {enabled: true},
+                                                        image: {
+                                                            markup: '<div class="mfp-figure">' +
+
+                                                            '<div class="mfp-img"></div>' +
+                                                            '<figure>' + '<figcaption>' +
+                                                            '<div class="mfp-bottom-bar">' +
+                                                            '<div style="background: #fff; text-align: center"  class="mfp-title "></div>' +
+
+                                                            '</div>' +
+                                                            '</figcaption>' +
+                                                            '</figure>' +
+                                                            '<div class="gallery-right-sidebar">' +
+                                                            '<div class="member-name"><?= $item["name"]; ?></div>' +
+                                                            '<div class="member-votes member-votes-<?= $i ?>">Голосов: <?= $item["vote"]; ?></div>' +
+                                                            '<div class="member-desc"><?= $item["desc"]; ?></div>' +
+                                                            '</div>' +
+                                                            '<div class="mfp-close"></div>' +
+                                                            '</div>'
+                                                        }
+//        midClick: true
+                                                        // other options
+                                                    });
+                                                </script>
+                                                <!--                                        <p class="vote-answer-item__real-number">90</p>-->
+                                            </div>
+                                            <div class="result">
+                                                <!--                                        <span class="percent">10.00%</span>-->
+                                                <span class="numvotes numvotes-<?= $i ?>">Голосов: <?= $item["vote"]; ?></span>
+                                            </div>
+                                            <div class="bar">
+                                                <button class="vote-button-<?= $i ?>">Голосовать</button>
+                                                <!--                                        <div class="votedone" style="width: 10.00%"></div>-->
                                             </div>
                                             <script>
-                                                $('.mgnfc-popup-parent-container-<?= $i ?>').magnificPopup({
-                                                    delegate: 'a', // child items selector, by clicking on it popup will open
-                                                    type: 'image',
-                                                    gallery: {enabled: true},
-                                                    image: {
-                                                        markup: '<div class="mfp-figure">' +
+                                                $(".vote-button-<?= $i ?>").click(function (e) {
 
-                                                        '<div class="mfp-img"></div>' +
-                                                        '<figure>' + '<figcaption>' +
-                                                        '<div class="mfp-bottom-bar">' +
-                                                        '<div style="background: #fff; text-align: center"  class="mfp-title "></div>' +
+                                                    var url = "<?php echo admin_url("admin-ajax.php") ?>"; // the script where you handle the form input.
 
-                                                        '</div>' +
-                                                        '</figcaption>' +
-                                                        '</figure>' +
-                                                        '<div class="gallery-right-sidebar">' +
-                                                        '<div class="member-name"><?= $item["name"]; ?></div>' +
-                                                        '<div class="member-votes member-votes-<?= $i ?>">Голосов: <?= $item["vote"]; ?></div>' +
-                                                        '<div class="member-desc"><?= $item["desc"]; ?></div>' +
-                                                        '</div>' +
-                                                        '<div class="mfp-close"></div>' +
-                                                        '</div>'
-                                                    }
-//        midClick: true
-                                                    // other options
+                                                    var form_data = {
+                                                        action: 'update_vote',
+                                                        member: <?= $i; ?>,
+                                                        post_id: <?= get_the_ID(); ?>
+                                                    };
+
+                                                    $.ajax({
+                                                        type: "POST",
+                                                        url: url,
+                                                        data: form_data, // serializes the form's elements.
+                                                        success: function (data) {
+                                                            data = data.substring(0, data.length - 1);
+                                                            console.log(JSON.parse(data));
+                                                            var response = JSON.parse(data);
+                                                            $(".numvotes-<?= $i ?>").html("Голосов: " + response.vote);
+                                                            $(".member-votes-<?= $i ?>").html("Голосов: " + response.vote);
+                                                            if (response.ip_disable) {
+                                                                alert('Вы уже проголосовали')
+                                                            }
+                                                        },
+
+                                                        error: function () {
+                                                            console.log('error');
+                                                        }
+                                                    });
+                                                    e.preventDefault(); // avoid to execute the actual submit of the form.
                                                 });
                                             </script>
-                                            <!--                                        <p class="vote-answer-item__real-number">90</p>-->
-                                        </div>
-                                        <div class="result">
-                                            <!--                                        <span class="percent">10.00%</span>-->
-                                            <span class="numvotes numvotes-<?= $i ?>">Голосов: <?= $item["vote"]; ?></span>
-                                        </div>
-                                        <div class="bar">
-                                            <button class="vote-button-<?= $i ?>">Голосовать</button>
-                                            <!--                                        <div class="votedone" style="width: 10.00%"></div>-->
-                                        </div>
-                                        <script>
-                                            $(".vote-button-<?= $i ?>").click(function (e) {
+                                        </li>
+                                        <?php $i++;
+                                        if ($i % 4 == 0) { ?>
+                                            </div>
+                                        <?php } ?>
+                                    <?php }
+                                }
+                            } ?>
 
-                                                var url = "<?php echo admin_url("admin-ajax.php") ?>"; // the script where you handle the form input.
 
-                                                var form_data = {
-                                                    action: 'update_vote',
-                                                    member : <?= $i; ?>,
-                                                    post_id : <?= get_the_ID(); ?>
-                                                };
 
-                                                $.ajax({
-                                                    type: "POST",
-                                                    url: url,
-                                                    data: form_data, // serializes the form's elements.
-                                                    success: function (data) {
-                                                        data = data.substring(0, data.length - 1);
-                                                        console.log(JSON.parse(data));
-                                                        var response = JSON.parse(data);
-                                                        $(".numvotes-<?= $i ?>").html("Голосов: " + response.vote);
-                                                        $(".member-votes-<?= $i ?>").html("Голосов: " + response.vote);
-                                                        if(response.ip_disable) {
-                                                            alert('Вы уже проголосовали')
+
+
+
+                            <?php if (get_field('members')) {
+                                foreach (get_field('members') as $item) {
+                                    if (!$item['winner']) {
+                                        if ($i % 4 == 0) { ?>
+                                            <div class="contest-voting-answers__row">
+                                        <?php } ?>
+                                        <li class="vote-answer-item ">
+                                            <a class="vhead"><?= $item['name']; ?></a>
+                                            <div class="vote-answer-item__image-block"
+                                                 href="#">
+                                                <img style=""
+                                                     src="<?= $item['mini_img']; ?>">
+                                                <div class="mgnfc-popup-parent-container mgnfc-popup-parent-container-<?= $i ?>"
+                                                     style="">
+                                                    <?php if ($item['gallery']) {
+                                                        foreach ($item['gallery'] as $gallery_item) { ?>
+                                                            <a href="<?= $gallery_item['url']; ?>"></a>
+                                                        <?php }
+                                                    } ?>
+                                                </div>
+                                                <script>
+                                                    $('.mgnfc-popup-parent-container-<?= $i ?>').magnificPopup({
+                                                        delegate: 'a', // child items selector, by clicking on it popup will open
+                                                        type: 'image',
+                                                        gallery: {enabled: true},
+                                                        image: {
+                                                            markup: '<div class="mfp-figure">' +
+
+                                                            '<div class="mfp-img"></div>' +
+                                                            '<figure>' + '<figcaption>' +
+                                                            '<div class="mfp-bottom-bar">' +
+                                                            '<div style="background: #fff; text-align: center"  class="mfp-title "></div>' +
+
+                                                            '</div>' +
+                                                            '</figcaption>' +
+                                                            '</figure>' +
+                                                            '<div class="gallery-right-sidebar">' +
+                                                            '<div class="member-name"><?= $item["name"]; ?></div>' +
+                                                            '<div class="member-votes member-votes-<?= $i ?>">Голосов: <?= $item["vote"]; ?></div>' +
+                                                            '<div class="member-desc"><?= $item["desc"]; ?></div>' +
+                                                            '</div>' +
+                                                            '<div class="mfp-close"></div>' +
+                                                            '</div>'
                                                         }
-                                                    },
+//        midClick: true
+                                                        // other options
+                                                    });
+                                                </script>
+                                                <!--                                        <p class="vote-answer-item__real-number">90</p>-->
+                                            </div>
+                                            <div class="result">
+                                                <!--                                        <span class="percent">10.00%</span>-->
+                                                <span class="numvotes numvotes-<?= $i ?>">Голосов: <?= $item["vote"]; ?></span>
+                                            </div>
+                                            <div class="bar">
+                                                <button class="vote-button-<?= $i ?>">Голосовать</button>
+                                                <!--                                        <div class="votedone" style="width: 10.00%"></div>-->
+                                            </div>
+                                            <script>
+                                                $(".vote-button-<?= $i ?>").click(function (e) {
 
-                                                    error: function () {
-                                                        console.log('error');
-                                                    }
+                                                    var url = "<?php echo admin_url("admin-ajax.php") ?>"; // the script where you handle the form input.
+
+                                                    var form_data = {
+                                                        action: 'update_vote',
+                                                        member: <?= $i; ?>,
+                                                        post_id: <?= get_the_ID(); ?>
+                                                    };
+
+                                                    $.ajax({
+                                                        type: "POST",
+                                                        url: url,
+                                                        data: form_data, // serializes the form's elements.
+                                                        success: function (data) {
+                                                            data = data.substring(0, data.length - 1);
+                                                            console.log(JSON.parse(data));
+                                                            var response = JSON.parse(data);
+                                                            $(".numvotes-<?= $i ?>").html("Голосов: " + response.vote);
+                                                            $(".member-votes-<?= $i ?>").html("Голосов: " + response.vote);
+                                                            if (response.ip_disable) {
+                                                                alert('Вы уже проголосовали')
+                                                            }
+                                                        },
+
+                                                        error: function () {
+                                                            console.log('error');
+                                                        }
+                                                    });
+                                                    e.preventDefault(); // avoid to execute the actual submit of the form.
                                                 });
-                                                e.preventDefault(); // avoid to execute the actual submit of the form.
-                                            });
-                                        </script>
-                                    </li>
-                                    <?php $i++;
-                                    if ($i % 4 == 0) { ?>
-                                        </div>
-                                    <?php } ?>
-                                <?php }
+                                            </script>
+                                        </li>
+                                        <?php $i++;
+                                        if ($i % 4 == 0) { ?>
+                                            </div>
+                                        <?php } ?>
+                                    <?php }
+                                }
                             } ?>
                         </ol>
                         <div class="clear"></div>
