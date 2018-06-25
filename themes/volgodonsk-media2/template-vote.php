@@ -193,7 +193,7 @@ the_post(); ?>
                                                         '</figure>' +
                                                         '<div class="gallery-right-sidebar">' +
                                                         '<div class="member-name"><?= $item["name"]; ?></div>' +
-                                                        '<div class="member-votes">Голосов: 857</div>' +
+                                                        '<div class="member-votes">Голосов: <?= $item["vote"]; ?></div>' +
                                                         '<div class="member-desc"><?= $item["desc"]; ?></div>' +
                                                         '</div>' +
                                                         '<div class="mfp-close"></div>' +
@@ -207,12 +207,43 @@ the_post(); ?>
                                         </div>
                                         <div class="result">
                                             <!--                                        <span class="percent">10.00%</span>-->
-                                            <span class="numvotes">Голосов: 857</span>
+                                            <span class="numvotes numvotes-<?= $i ?>">Голосов: <?= $item["vote"]; ?></span>
                                         </div>
                                         <div class="bar">
-                                            <button>Голосовать</button>
+                                            <button class="vote-button-<?= $i ?>">Голосовать</button>
                                             <!--                                        <div class="votedone" style="width: 10.00%"></div>-->
                                         </div>
+                                        <script>
+                                            $(".vote-button-<?= $i ?>").click(function (e) {
+
+                                                var url = "<?= get_template_directory_uri()?>/vote.php"; // the script where you handle the form input.
+
+                                                var form_data = {
+                                                    member : <?= $i; ?>
+                                                };
+
+                                                $.ajax({
+                                                    type: "POST",
+                                                    url: url,
+                                                    data: form_data, // serializes the form's elements.
+                                                    success: function (data) {
+                                                        /*if (data == 1) {
+                                                            console.log('success');
+                                                        }
+
+                                                        else {
+                                                            console.log('error');
+                                                        }*/
+                                                        console.log(data);
+                                                    },
+
+                                                    error: function (data) {
+                                                        console.log('error');
+                                                    }
+                                                });
+                                                e.preventDefault(); // avoid to execute the actual submit of the form.
+                                            });
+                                        </script>
                                     </li>
                                     <?php $i++;
                                     if ($i % 4 == 0) { ?>
