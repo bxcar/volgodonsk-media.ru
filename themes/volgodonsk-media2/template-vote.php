@@ -190,6 +190,29 @@ the_post(); ?>
                         }
                     }
 
+                    .vote-answer-item-winner-wrap {
+                        display: flex;
+                        align-items: center;
+                        flex-direction: column;
+                    }
+
+                    .vote-answer-item-winner .vhead {
+                        display: block;
+                        border-bottom: solid 3px #e3ddd1;
+                        padding-bottom: 3px;
+                        font: bold 15px/17px DinPro, Arial;
+                        margin-bottom: 6px;
+                        white-space: nowrap;
+                        color: #dd4b39;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+
+                    .vote-answer-item-winner .vhead:hover {
+                        text-decoration: none;
+                        color: #dd4b39;
+                    }
+
                     @media (max-width: 970px) {
                         .mfp-figure {
                             flex-direction: column;
@@ -241,15 +264,12 @@ the_post(); ?>
                 <ol class="contest-voting">
                     <li class="contest-voting-item contest-voting-first vote-item-vote-last ">
                         <div class="contest-voting-question">&nbsp;</div>
-                        <ol class="contest-voting-answers">
-                            <?php if (get_field('members') && get_field('konkurs_close')) {
-                                $i = 0;
-                                foreach (get_field('members') as $item) {
-                                    if ($item['winner']) {
-                                        if (($i % 4 == 0)) { ?>
-                                            <div class="contest-voting-answers__row">
-                                        <?php } ?>
-                                        <li class="vote-answer-item ">
+
+                        <?php if (get_field('members') && get_field('konkurs_close')) {
+                            foreach (get_field('members') as $item) {
+                                if ($item['winner']) { ?>
+                                    <div class="vote-answer-item-winner-wrap">
+                                        <div class="vote-answer-item vote-answer-item-winner">
                                             <a class="vhead"><?= $item['name']; ?> - Победитель</a>
                                             <div class="vote-answer-item__image-block"
                                                  href="#">
@@ -334,21 +354,16 @@ the_post(); ?>
                                                     e.preventDefault(); // avoid to execute the actual submit of the form.
                                                 });
                                             </script>
-                                        </li>
-                                        <?php $i++;
-                                        if ($i % 4 == 0) { ?>
-                                            </div>
-                                        <?php } ?>
-                                    <?php }
-                                }
-                            } ?>
+                                        </div>
+                                    </div>
+                                <?php }
+                            }
+                        } ?>
 
 
-
-
-
-
+                        <ol class="contest-voting-answers">
                             <?php if (get_field('members')) {
+                                $i = 0;
                                 foreach (get_field('members') as $item) {
                                     if (!$item['winner']) {
                                         if ($i % 4 == 0) { ?>
